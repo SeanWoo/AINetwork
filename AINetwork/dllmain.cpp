@@ -31,7 +31,7 @@ double** outputs;
 double** errors;
 
 /////////////////////////////////////////////////////////////////////////////////////////
-//Функции экспортируймые
+//Function Export
 /////////////////////////////////////////////////////////////////////////////////////////
 bool IsInitialize() 
 {
@@ -67,6 +67,7 @@ void SetWeight(int layer, int neuron, int weight, double value)
     weights[layer][neuron][weight] = value;
 }
 
+//Initialization AI
 bool Initialize(double learningRate, int countInputNeurons, int countOutputNeurons, int* hiddenLayers, int hiddenLayersSize) 
 {
     //weight[LAYER][NEURON][WEIGHT]
@@ -90,13 +91,14 @@ bool Initialize(double learningRate, int countInputNeurons, int countOutputNeuro
 
     return true;
 }
+//Start
 double Forward(double* inputs, int &index) 
 {
-    for (int i = 0; i < sizes[0]; i++)
+    for (int i = 0; i < sizes[0]; i++)//Send signals to input neurons
     {
         outputs[0][i] = inputs[i];
     }
-    for (int i = 1; i < countLayer; i++)
+    for (int i = 1; i < countLayer; i++)//Send signals to hidden neurons
     {
         double* nextInputs = new double[sizes[i - 1]];
         for (int k = 0; k < sizes[i - 1]; k++)
@@ -109,7 +111,7 @@ double Forward(double* inputs, int &index)
         }
     }
     double result = 0;
-    for (int i = 0; i < sizes[countLayer - 1]; i++)
+    for (int i = 0; i < sizes[countLayer - 1]; i++)//Return result and index output neuron
     {
         if (outputs[countLayer - 1][i] > result) {
             index = i;
@@ -118,6 +120,7 @@ double Forward(double* inputs, int &index)
     }
     return result;
 }
+//Learning
 double BackPropagation(double excepted, double* inputs) 
 {
     int index = 0;
@@ -145,6 +148,7 @@ double BackPropagation(double excepted, double* inputs)
 
     return difference * difference;
 }
+//Free memory
 bool Dispose() 
 {
     for (int i = 0; i < countLayer; i++)
@@ -165,7 +169,7 @@ bool Dispose()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-//Функции
+//Functions
 /////////////////////////////////////////////////////////////////////////////////////////
 void InitWeights(int countInputNeurons, int countOutputNeurons, int* hiddenLayers, int hiddenLayersSize) 
 {
@@ -247,7 +251,7 @@ void FeedForward(int layer, int neuron, double* inputs)
     double sum = 0;
     for (int i = 0; i < sizes[layer-1]; i++)
     {
-        sum += inputs[i] * weights[layer][neuron][i];
+        sum += inputs[i] * weights[layer][neuron][i]; //Сounting output
     }
     outputs[layer][neuron] = Activation(sum);
 }
@@ -258,7 +262,7 @@ void Learn(int layer, int neuron, double error)
 
     for (int i = 0; i < sizes[layer - 1]; i++)
     {
-        weights[layer][neuron][i] = weights[layer][neuron][i] - outputs[layer - 1][i] * delta * learnRate;
+        weights[layer][neuron][i] = weights[layer][neuron][i] - outputs[layer - 1][i] * delta * learnRate; //Сounting new weights
     }
 }
 double Activation(double x)
