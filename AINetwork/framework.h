@@ -26,7 +26,7 @@ EXTERN_C FUNCTION_EXPORT bool CountNeurons(int IDLayer);
 
 EXTERN_C FUNCTION_EXPORT bool Initialize(double learningRate, int countInputNeurons, int countOutputNeurons, int* hiddenLayers, int hiddenLayersSize);
 EXTERN_C FUNCTION_EXPORT double Forward(double* inputs, int &index);
-EXTERN_C FUNCTION_EXPORT double BackPropagation(double excepted, double* inputs);
+EXTERN_C FUNCTION_EXPORT double BackPropagation(double* excepted, double* inputs);
 EXTERN_C FUNCTION_EXPORT double GetWeight(int layer, int neuron, int weight);
 EXTERN_C FUNCTION_EXPORT double GetOutput(int layer, int neuron);
 EXTERN_C FUNCTION_EXPORT double GetError(int layer, int neuron);

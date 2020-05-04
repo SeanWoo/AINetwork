@@ -121,14 +121,15 @@ double Forward(double* inputs, int &index)
     return result;
 }
 //Learning
-double BackPropagation(double excepted, double* inputs) 
+double BackPropagation(double* excepted, double* inputs) 
 {
     int index = 0;
     double actual = Forward(inputs, index);
-    double difference = actual - excepted;
+    double difference = actual - excepted[index];
 
     for (int i = 0; i < sizes[countLayer - 1]; i++)
     {
+        double diff = actual - excepted[i];
         Learn(countLayer - 1, i, difference);
     }
 
